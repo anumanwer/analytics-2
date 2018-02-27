@@ -1,0 +1,16 @@
+library("rJava")
+library("tm.plugin.webmining")
+library("purrr")
+library("dplyr")
+
+
+
+currency <- c("Bitcoin", "Ethereum", "Ripple")
+symbol <- c("BTC", "ETH", "XRP")
+
+download_articles <- function(symbol){WebCorpus(GoogleNewsSource(paste0("Bitcoin:", symbol, num=100)))}
+
+bitcoin_articles <- data_frame(currency = currency, symbol = symbol) %>%
+  mutate(Corpus = map(symbol, download_articles))
+
+bitcoin_articles
