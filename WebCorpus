@@ -14,3 +14,9 @@ bitcoin_articles <- data_frame(currency = currency, symbol = symbol) %>%
   mutate(Corpus = map(symbol, download_articles))
 
 bitcoin_articles
+
+
+
+Tutorial followed:
+
+https://raw.githubusercontent.com/FercenBulut/Mining-Financial-Articles/master/01%20-%20Project/Mining%20Financial%20Articles.Rmd
