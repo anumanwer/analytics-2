@@ -5,9 +5,9 @@ library('quantmod')
 getSymbols('BTC-USD')
 getSymbols('ETH-USD')
 getSymbols('XRP-USD')
-class('BTC-USD')
-head('BTC-USD')
-chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
+class(`BTC-USD`)
+head(`BTC-USD`)
+chartSeries(`BTC-USD`, subset='last 36 weeks', theme = 'white')
 
 Error: > chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
 Error in try.xts(x, error = "chartSeries requires an xtsible object") : 
