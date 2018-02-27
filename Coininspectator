@@ -1,0 +1,23 @@
+
+library(rvest)
+
+url <- 'https://coinspectator.com/'
+
+content <- read_html(url)
+
+#News Title
+
+xpath ='//*[@id="headline-desktop-trigger"]/div[1]'
+title <- content %>% html_nodes(xpath = xpath) %>% html_text()
+
+#News Link Domain
+xpath = '//*[@id="headline-desktop-trigger"]/div[1]/p/small/span[1]'
+link_domain <- content %>% html_nodes(xpath = xpath) %>% html_text()
+
+#Link Age (submission time)
+xpath = '//*[@id="headline-desktop-trigger"]/div[2]/div'
+age <- content %>% html_nodes(xpath = xpath) %>% html_text()
+
+#Final Dataframe
+
+df <- data.frame(title = title, link_domain = link_domain, age = age)
