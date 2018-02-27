@@ -1,0 +1,14 @@
+I used this code, it fetches data beautifully from yahoo finance, but does no good in plotting it.
+Could you recommend another plotting function/package? Also how do I merge the three datasets (BTC-USD, ETH-USD, XRP-USD)?
+
+library('quantmod')
+getSymbols('BTC-USD')
+getSymbols('ETH-USD')
+getSymbols('XRP-USD')
+class('BTC-USD')
+head('BTC-USD')
+chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
+
+Error: > chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
+Error in try.xts(x, error = "chartSeries requires an xtsible object") : 
+  chartSeries requires an xtsible object
