@@ -12,3 +12,7 @@ chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
 Error: > chartSeries('BTC-USD=X', subset='last 36 weeks', theme = 'white')
 Error in try.xts(x, error = "chartSeries requires an xtsible object") : 
   chartSeries requires an xtsible object
+
+
+
+Tutorial followed: https://www.youtube.com/watch?v=xeflRR5RKFw&t=438s
