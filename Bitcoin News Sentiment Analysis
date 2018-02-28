@@ -1,0 +1,32 @@
+library(readr)
+library(stringr)
+library(dplyr)
+
+#Used import readr function to import the csv file
+
+library(tidytext)
+
+# Rename all columns in R because I was facing an issue with the same column names
+names(bitcoinnews) <- c("id", "link", "heading", "date", "description", "pagination", "url")
+
+btc_word <- bitcoinnews %>%
+  select(id, heading, date, description) %>%
+  unnest_tokens(word, heading) %>%
+  unnest_tokens(word, description) %>%
+  filter(!word %in% stop_words$word,
+         str_detect(word, "^[a-z']+$"))
+
+#apply AFINN
+AFINN <- sentiments %>%
+  filter(lexicon == "AFINN") %>%
+  select(word, afinn_score = score)
+
+View(AFINN)
+
+bitcoin_sentiment <- btc_word %>%
+  inner_join(AFINN, by = "word") %>%
+  group_by(id, date) %>%
+  summarize(sentiment = mean(afinn_score))
+
+View(bitcoin_sentiment)
+
