@@ -1,0 +1,54 @@
+#install.packages('quantmod')
+#install.packages('dataframes2xls')
+
+library('quantmod')
+btcprice <- new.env()
+startDate = as.Date("2016-01-01") 
+#Specify period of time we are interested in
+endDate = as.Date("2018-03-1")
+
+getSymbols('BTC-USD',from = startDate, to = endDate)
+
+
+library('dataframes2xls')
+
+write.csv(as.data.frame(`BTC-USD`),/Users/VivienneJin/Desktop/BTC-USD.csv")
+
+library(readr)
+btc<-read_csv(file="/Users/VivienneJin/Desktop/BTC-USD.csv")
+colnames(btc) <- c("Date","Open","High","Low","Close","Volumn","Adjusted")
+
+
+View(btc)
+str(btc)
+head(btc)
+class(btc$Date)
+chartSeries(`BTC-USD`, theme = 'white')
+
+require(ggplot2)
+ggplot(aes(x = Date, y = Adjusted), data = btc) + geom_line()
+btc_prices<-btc[,"Adjusted"]
+          
+n<-nrow(btc_prices)
+btc_ret <- ((btc_prices[2:n, 1] - btc_prices[1:(n-1), 1])/btc_prices[1:(n-1), 1])
+class(btc_ret)
+btc_ret <- rbind(NA,btc_ret)
+
+#add new returns column to btc_return df
+btc$Return <- NA
+btc$Return <- btc_ret$Adjusted
+
+View(btc)
+
+require(ggplot2)
+theme_set(theme_bw()) # Change the theme to my preference
+ggplot(aes(x = Date, y = Return), data = btc) + geom_line()
+
+btc$AbsReturn<-abs(btc$Return)
+View(btc)
+
+#finding maximum
+btc_order <- btc[order(btc$AbsReturn,decreasing = TRUE), ] 
+View(btc_order)
+
+#try to plot maximum and minimum
