@@ -15,6 +15,18 @@ btc_word <- bitcoinnews %>%
   unnest_tokens(word, description) %>%
   filter(!word %in% stop_words$word,
          str_detect(word, "^[a-z']+$"))
+btc_word
+
+#Tibble for count
+tibble<-btc_word %>%
+  count(word,sort=TRUE)
+tibblefiltered = tibble %>% filter(n > 1)
+
+#Wordclouds
+library(wordcloud)
+btc_word %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 100))
 
 #apply AFINN
 AFINN <- sentiments %>%
@@ -29,4 +41,5 @@ bitcoin_sentiment <- btc_word %>%
   summarize(sentiment = mean(afinn_score))
 
 View(bitcoin_sentiment)
+
 
