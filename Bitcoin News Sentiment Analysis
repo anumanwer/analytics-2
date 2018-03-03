@@ -27,6 +27,18 @@ library(wordcloud)
 btc_word %>%
   count(word) %>%
   with(wordcloud(word, n, max.words = 100))
+  
+#Wordclouds expressing +ve and -ve sentiment using bing
+
+library(reshape2)
+btc_word %>%
+  filter()
+btc_word %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort=TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words=250)
 
 #apply AFINN
 AFINN <- sentiments %>%
