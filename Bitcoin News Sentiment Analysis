@@ -49,9 +49,21 @@ View(AFINN)
 
 bitcoin_sentiment <- btc_word %>%
   inner_join(AFINN, by = "word") %>%
-  group_by(id, date) %>%
+  group_by(date) %>%
   summarize(sentiment = mean(afinn_score))
 
 View(bitcoin_sentiment)
+write.csv(bitcoin_sentiment)
+write.csv(bitcoin_sentiment, 'bitcoin_sentiment.csv')
+
+#histogram frequency of sentiments
+library(ggplot2)
+btcsentiment <- bitcoin_sentiment
+
+ggplot(btcsentiment,aes(sentiment))+geom_histogram(binwidth = 1, fill="lightblue")+ggtitle("frequency of sentiments")+
+  ylab("frequency")
+
+
+str(btcsentiment)
 
 
